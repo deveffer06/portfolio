@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Portafolio de Juan Effer, ingeniero de sistemas y desarrollador backend con Java y Spring Boot.">
+<title>Juan Effer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: el portafolio se lee como la documentación de un API. Cada sección es un endpoint y el hero muestra la respuesta 200 OK de "GET /juan-effer". */
+:root {
+  --bg: #eef0f3;
+  --surface: #ffffff;
+  --fg: #12192a;
+  --muted: #566074;
+  --line: #d3d8e0;
+  --accent: #d4501c;
+  --accent-ink: #ffffff;
+  --code-bg: #12192a;
+  --code-fg: #dbe3f1;
+  --code-key: #8fb4ff;
+  --code-str: #f4b183;
+  --code-ok: #7fd6a4;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1420;
+    --surface: #141d2d;
+    --fg: #e8ecf4;
+    --muted: #9aa6bc;
+    --line: #26324a;
+    --accent: #f08a4b;
+    --accent-ink: #1a0e05;
+    --code-bg: #090e17;
+    --code-fg: #dbe3f1;
+    --code-key: #8fb4ff;
+    --code-str: #f4b183;
+    --code-ok: #7fd6a4;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1420;
+  --surface: #141d2d;
+  --fg: #e8ecf4;
+  --muted: #9aa6bc;
+  --line: #26324a;
+  --accent: #f08a4b;
+  --accent-ink: #1a0e05;
+  --code-bg: #090e17;
+  --code-fg: #dbe3f1;
+  --code-key: #8fb4ff;
+  --code-str: #f4b183;
+  --code-ok: #7fd6a4;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 1080px; margin-inline: auto; }
+
+/* Barra superior */
+.top {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  padding-block: 22px;
+  font-family: var(--font-mono); font-size: 13px;
+}
+.top .brand { font-weight: 500; letter-spacing: 0.02em; text-decoration: none; }
+.top .brand b { color: var(--accent); font-weight: 500; }
+.top nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.top nav a { text-decoration: none; color: var(--muted); }
+.top nav a:hover { color: var(--fg); }
+
+/* Hero */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 48px; align-items: center;
+  padding-block: 40px 72px;
+}
+.status {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--line); background: var(--surface);
+  padding: 6px 12px; border-radius: 999px;
+}
+.status i { width: 8px; height: 8px; border-radius: 50%; background: #2e9e63; display: block; }
+h1 {
+  font-family: var(--font-display); font-weight: 800; letter-spacing: -0.035em;
+  font-size: clamp(3.2rem, 9vw, 6.2rem); line-height: 0.95; margin: 22px 0 18px; text-wrap: balance;
+}
+h1 span { color: var(--accent); }
+.lead { font-size: 1.25rem; line-height: 1.5; max-width: 34ch; margin: 0 0 14px; text-wrap: pretty; }
+.sub { color: var(--muted); max-width: 46ch; margin: 0 0 30px; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-block; text-decoration: none; font-weight: 600; font-size: 15px;
+  padding: 13px 22px; border-radius: 8px; border: 1.5px solid var(--fg);
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.07); }
+.btn.ghost:hover { background: var(--surface); }
+
+/* Respuesta del API */
+.code {
+  background: var(--code-bg); color: var(--code-fg); border-radius: 12px; overflow: hidden;
+  font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7;
+  box-shadow: 0 18px 40px -22px rgba(10, 16, 30, 0.55);
+  min-width: 0;
+}
+.code .bar {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 12.5px;
+}
+.code .bar .verb { color: var(--code-ok); font-weight: 500; }
+.code .bar .path { color: var(--code-fg); }
+.code .bar .ok { color: var(--code-ok); }
+.code pre { margin: 0; padding: 18px; overflow-x: auto; }
+.k { color: var(--code-key); }
+.s { color: var(--code-str); }
+.b { color: var(--code-ok); }
+
+/* Secciones */
+section { padding-block: 64px; border-top: 1px solid var(--line); }
+.route {
+  font-family: var(--font-mono); font-size: 13px; color: var(--accent); margin: 0 0 10px;
+  letter-spacing: 0.02em;
+}
+.route em { font-style: normal; color: var(--muted); }
+h2 {
+  font-family: var(--font-display); font-weight: 700; letter-spacing: -0.025em;
+  font-size: clamp(1.9rem, 4.5vw, 2.7rem); line-height: 1.08; margin: 0 0 28px; text-wrap: balance;
+}
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+.about p { margin: 0 0 16px; max-width: 62ch; }
+.about p:last-child { margin-bottom: 0; }
+.facts { margin: 0; display: grid; gap: 0; align-content: start; }
+.facts div { display: flex; justify-content: space-between; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.facts div:first-child { border-top: 1px solid var(--line); }
+.facts dt { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.facts dd { margin: 0; font-weight: 500; text-align: right; }
+
+/* Stack */
+.stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 48px; }
+.stack h3 {
+  font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted); margin: 0 0 14px;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.chips li {
+  font-family: var(--font-mono); font-size: 14px; padding: 7px 13px; border-radius: 6px;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.chips li.main { border-color: var(--accent); color: var(--accent); font-weight: 500; }
+
+/* Experiencia y estudios */
+.entry {
+  display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 12px 40px;
+  padding-block: 28px; border-top: 1px solid var(--line);
+}
+.entry:last-child { border-bottom: 1px solid var(--line); }
+.when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); line-height: 1.6; }
+.when strong { display: block; color: var(--fg); font-weight: 500; }
+.entry h3 { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; letter-spacing: -0.015em; margin: 0 0 2px; line-height: 1.2; }
+.where { color: var(--muted); margin: 0 0 14px; font-size: 15.5px; }
+.entry p.desc { margin: 0 0 12px; max-width: 64ch; }
+.tag { font-family: var(--font-mono); font-size: 12.5px; padding: 3px 10px; border-radius: 4px; background: var(--surface); border: 1px solid var(--line); display: inline-block; }
+
+/* Proyectos */
+.projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.project {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 24px;
+  display: flex; flex-direction: column; gap: 14px; min-width: 0;
+}
+.project .endpoint { font-family: var(--font-mono); font-size: 13px; color: var(--accent); margin: 0; overflow-wrap: anywhere; }
+.project h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; margin: 0; }
+.project p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.project .chips { margin-top: auto; }
+.project .chips li { font-size: 12.5px; padding: 5px 10px; }
+/* Contacto */
+.contact { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 40px; align-items: end; }
+.contact h2 { font-size: clamp(2.3rem, 6vw, 3.8rem); margin: 0; }
+.contact p { margin: 14px 0 0; color: var(--muted); max-width: 44ch; }
+.contact .actions { justify-content: flex-start; }
+
+footer {
+  border-top: 1px solid var(--line); padding-block: 26px 40px;
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--muted);
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+}
+
+@media (max-width: 860px) {
+  .hero, .about, .contact { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .projects { grid-template-columns: minmax(0, 1fr); }
+  .hero { padding-block: 24px 56px; }
+  .stack { grid-template-columns: minmax(0, 1fr); }
+  .entry { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+}
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .facts div { flex-direction: column; gap: 2px; }
+  .facts dd { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#inicio">juan<b>.</b>effer</a>
+    <nav aria-label="Secciones">
+      <a href="#sobre-mi">sobre-mi</a>
+      <a href="#stack">stack</a>
+      <a href="#experiencia">experiencia</a>
+      <a href="#contacto">contacto</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <div class="hero">
+      <div>
+        <span class="status"><i></i> En busca de empleo</span>
+        <h1>Juan<br><span>Effer</span></h1>
+        <p class="lead">Ingeniero de Sistemas. Construyo backend con Java y Spring Boot.</p>
+        <p class="sub">APIs REST, bases de datos SQL y seguridad con Spring Security. Vivo en el área metropolitana de Bucaramanga y trabajo presencial, híbrido o en remoto.</p>
+        <div class="actions">
+          <a class="btn primary" href="#contacto">Hablemos</a>
+          <a class="btn ghost" href="#experiencia">Ver experiencia</a>
+        </div>
+      </div>
+
+      <div class="code" aria-label="Resumen de perfil en formato JSON">
+        <div class="bar">
+          <span><span class="verb">GET</span> <span class="path">/juan-effer</span></span>
+          <span class="ok">200 OK</span>
+        </div>
+<pre><code>{
+  <span class="k">"nombre"</span>: <span class="s">"Juan Effer"</span>,
+  <span class="k">"rol"</span>: <span class="s">"Systems Engineer"</span>,
+  <span class="k">"backend"</span>: [
+    <span class="s">"Java"</span>,
+    <span class="s">"Spring Boot"</span>,
+    <span class="s">"Spring Security"</span>
+  ],
+  <span class="k">"api"</span>: <span class="s">"REST"</span>,
+  <span class="k">"datos"</span>: <span class="s">"SQL"</span>,
+  <span class="k">"ubicacion"</span>: <span class="s">"Bucaramanga, CO"</span>,
+  <span class="k">"modalidad"</span>: [<span class="s">"presencial"</span>, <span class="s">"hibrido"</span>, <span class="s">"remoto"</span>],
+  <span class="k">"disponible"</span>: <span class="b">true</span>
+}</code></pre>
+      </div>
+    </div>
+
+    <section id="sobre-mi">
+      <p class="route">GET <em>/sobre-mi</em></p>
+      <h2>Me gusta el código que se sostiene solo.</h2>
+      <div class="about">
+        <div>
+          <p>Soy Ingeniero de Sistemas y me apasiona el desarrollo de software. Mi foco está en el backend con Java y Spring Boot: aplicaciones robustas, escalables y fáciles de mantener.</p>
+          <p>También trabajo con HTML, CSS, JavaScript, TypeScript y Angular, lo que me permite entender una aplicación de punta a punta y hablar el mismo idioma que el equipo de frontend.</p>
+          <p>Sigo aprendiendo buenas prácticas, diseño de software, desarrollo de APIs REST e integración entre aplicaciones. Busco proyectos desafiantes donde mi trabajo aporte valor.</p>
+        </div>
+        <dl class="facts">
+          <div><dt>título</dt><dd>Ingeniería de Sistemas</dd></div>
+          <div><dt>universidad</dt><dd>Autónoma de Bucaramanga</dd></div>
+          <div><dt>especialidad</dt><dd>Backend con Java</dd></div>
+          <div><dt>ubicación</dt><dd>Bucaramanga, Colombia</dd></div>
+          <div><dt>modalidad</dt><dd>Presencial, híbrido, remoto</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="stack">
+      <p class="route">GET <em>/stack</em></p>
+      <h2>Tecnologías con las que trabajo.</h2>
+      <div class="stack">
+        <div>
+          <h3>Backend</h3>
+          <ul class="chips">
+            <li class="main">Java</li>
+            <li class="main">Spring Boot</li>
+            <li class="main">Spring Security</li>
+            <li>APIs REST</li>
+            <li>Laravel (PHP)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Datos y herramientas</h3>
+          <ul class="chips">
+            <li class="main">SQL</li>
+            <li>Git</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Frontend</h3>
+          <ul class="chips">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>TypeScript</li>
+            <li>Angular</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contenido web</h3>
+          <ul class="chips">
+            <li>WordPress</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="experiencia">
+      <p class="route">GET <em>/experiencia</em></p>
+      <h2>Dónde he trabajado.</h2>
+      <article class="entry">
+        <div class="when"><strong>jul 2025 – dic 2025</strong>6 meses · En remoto</div>
+        <div>
+          <h3>Asistente de investigación</h3>
+          <p class="where">Universidad Autónoma de Bucaramanga · Prácticas</p>
+          <p class="desc">Participé en el proyecto "Empoderamiento Saludable", una aplicación digital con enfoque de informática participativa para promover hábitos saludables en personas con diabetes y con alto riesgo de diabetes.</p>
+          <p class="desc">Apoyé el desarrollo y el mantenimiento de la plataforma web del proyecto en WordPress: estructura de contenidos, configuración del sitio y presentación de la información a los usuarios.</p>
+          <span class="tag">WordPress</span>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="when"><strong>dic 2024 – mar 2025</strong>4 meses · En remoto, Madrid</div>
+        <div>
+          <h3>Desarrollador de back-end</h3>
+          <p class="where">Clupik · Prácticas</p>
+          <p class="desc">Desarrollé y mantuve endpoints RESTful con Laravel (PHP) y participé en todo el ciclo de desarrollo de APIs del sistema interno de la empresa.</p>
+          <p class="desc">Colaboré con el equipo en funcionalidades de backend, manejo de base de datos y validación de datos en los servicios.</p>
+          <span class="tag">Laravel</span>
+        </div>
+      </article>
+    </section>
+
+    <section id="educacion">
+      <p class="route">GET <em>/educacion</em></p>
+      <h2>Formación.</h2>
+      <article class="entry">
+        <div class="when"><strong>ago 2020 – dic 2025</strong>Bucaramanga, Colombia</div>
+        <div>
+          <h3>Ingeniería de Sistemas</h3>
+          <p class="where">Universidad Autónoma de Bucaramanga</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="proyectos">
+      <p class="route">GET <em>/proyectos</em></p>
+      <h2>Proyectos.</h2>
+      <div class="projects">
+        <article class="project">
+          <p class="endpoint">POST /api/tareas</p>
+          <h3>API de gestión de tareas</h3>
+          <p>API REST para crear, asignar y consultar tareas por usuario. Registro e inicio de sesión con autenticación por token y roles de acceso.</p>
+          <ul class="chips">
+            <li>Java</li>
+            <li>Spring Boot</li>
+            <li>Spring Security</li>
+            <li>SQL</li>
+          </ul>
+        </article>
+        <article class="project">
+          <p class="endpoint">GET /api/inventario</p>
+          <h3>Sistema de inventario</h3>
+          <p>Aplicación backend para controlar productos, existencias y movimientos de bodega, con validación de datos y consultas SQL para reportes.</p>
+          <ul class="chips">
+            <li>Java</li>
+            <li>Spring Boot</li>
+            <li>SQL</li>
+            <li>Git</li>
+          </ul>
+        </article>
+        <article class="project">
+          <p class="endpoint">GET /citas</p>
+          <h3>Agenda de citas web</h3>
+          <p>Interfaz en Angular que consume una API REST para reservar, cambiar y cancelar citas, con formularios validados y vista de calendario.</p>
+          <ul class="chips">
+            <li>Angular</li>
+            <li>TypeScript</li>
+            <li>APIs REST</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <p class="route">POST <em>/contacto</em></p>
+      <div class="contact">
+        <div>
+          <h2>¿Tienes una vacante o un proyecto?</h2>
+          <p>Escríbeme por LinkedIn. Busco oportunidades como desarrollador backend con Java y Spring Boot.</p>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://www.linkedin.com/in/juan-effer-999ba13bb/" target="_blank" rel="noopener">Abrir mi LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Juan Effer</span>
+    <span>Bucaramanga, Colombia</span>
+  </footer>
+</div>
+</body>
+</html>
